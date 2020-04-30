@@ -1,6 +1,6 @@
 module.exports = {
     pwa: {
-        name: 'Liara',
+        name: 'LiaraPWA',
         themeColor: '#2c333f',
         msTileColor: '#FFFFFF',
         manifestOptions: {
