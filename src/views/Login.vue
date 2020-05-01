@@ -13,13 +13,20 @@
                 v-model="apiKey"
                 :state="requireValue ? false : null"
             />
-            <b-button class="login-box--btn" variant="success" @click="login">
+            <b-button
+                id="login-box--btn"
+                class="login-box--btn"
+                variant="success"
+                @click="login"
+            >
                 ورود
             </b-button>
         </div>
         <div class="liara-details">
             <p class="liara-details__site">
-                برای دسترسی به API key وارد<a :href="liaraURL"> حساب کاربری</a>
+                برای دسترسی به API key وارد<a :href="liaraURL" target="_blank">
+                    حساب کاربری</a
+                >
                 خود شده <br />
                 و در قسمت API کد مربوط را کپی کنید
             </p>
@@ -55,12 +62,13 @@ export default {
     methods: {
         login() {
             if (this.apiKey) {
+                document.getElementById('login-box--btn').disabled = true
                 this.getAxios('https://api.liara.ir/v1/projects', 'Login')
             } else {
                 this.requireValue = true
             }
         },
-        getAxios(url, nameOfPost) {
+        getAxios(url, nameOfGet) {
             axios
                 .get(url, {
                     headers: {
@@ -69,7 +77,7 @@ export default {
                 })
                 .then(response => {
                     if (response.status === 200) {
-                        console.log(`${nameOfPost} Success`)
+                        console.log(`${nameOfGet} Success`)
                         localStorage.setItem('token', this.apiKey)
                         this.$router.push({
                             name: 'Home',
@@ -87,7 +95,7 @@ export default {
                             this.errorBaner('API key معتبر نمی‌باشد')
                             this.unauthorized = true
                         } else {
-                            console.log(e, `${nameOfPost} Fail`)
+                            console.log(e, `${nameOfGet} Fail`)
                             this.errorBaner('خطا - مجددا تلاش کنید')
                         }
                     } else if (e.request) {
@@ -104,7 +112,11 @@ export default {
             document.getElementById(
                 'unauthorized-p'
             ).textContent = content.toString()
-            document.getElementById('unauthorized').style.height = '56px'
+            document.getElementById('unauthorized').style.top = '0'
+            setTimeout(function() {
+                document.getElementById('unauthorized').style.top = '-56px'
+                document.getElementById('login-box--btn').disabled = false
+            }, 5000)
         },
     },
 }
@@ -122,15 +134,15 @@ $white : #ffffff
     justify-content: center
     align-items: center
     .unauthorized
+        width: 100%
+        position: absolute
+        display: block !important
         text-align: center
         color: $white
         background-color: $red
-        width: 100%
         border-radius: 0px 0px 12px 12px
-        overflow: hidden
-        transition: height 0.8s
-        height: 0
-        display: inline !important
+        transition: top 0.8s
+        top: -56px
         > p
             padding-top: 1rem
 
