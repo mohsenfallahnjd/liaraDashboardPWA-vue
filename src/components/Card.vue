@@ -31,13 +31,7 @@
         <p>
             ایجاد شده در: <strong>{{ createdAt }}</strong>
         </p>
-        <b-checkbox
-            id="toggle-btn"
-            switch
-            size="lg"
-            v-model="currentMode"
-            @change="changeMode"
-        >
+        <b-checkbox switch size="lg" v-model="currentMode" @change="changeMode">
             <b :class="currentMode ? 'greenColor' : 'redColor'">
                 {{ onORoff }}
             </b>
@@ -125,7 +119,6 @@ export default {
             this.$emit('deleteErr')
         },
         changeMode(checked) {
-            document.getElementById('toggle-btn').disabled = true
             this.postAxios(
                 `https://api.liara.ir/v1/projects/${this.details.project_id}/actions/scale`,
                 {
@@ -149,10 +142,8 @@ export default {
                         console.log(response)
                         this.currentMode = !this.currentMode
                     }
-                    document.getElementById('toggle-btn').disabled = false
                 })
                 .catch(e => {
-                    document.getElementById('toggle-btn').disabled = false
                     this.currentMode = !this.currentMode
                     if (e.response) {
                         console.log('Error Response')

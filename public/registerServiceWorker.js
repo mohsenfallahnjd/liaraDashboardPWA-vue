@@ -42,11 +42,11 @@ self.addEventListener('install', event => {
         .then(cache =>
             cache.addAll([
                 'favicon.ico',
-                'https://liarapwa.liara.run/js/chunk-vendors.js',
-                'https://liarapwa.liara.run/manifest.json',
-                'https://liarapwa.liara.run/fonts/dana-fanum-bold.0dd44d65.woff2',
-                'https://liarapwa.liara.run/fonts/dana-fanum-regular.870a0b65.woff2',
-                'https://liarapwa.liara.run/img/icons/android-chrome-192x192.png',
+                'js/chunk-vendors.js',
+                'manifest.json',
+                'fonts/dana-fanum-bold.0dd44d65.woff2',
+                'fonts/dana-fanum-regular.870a0b65.woff2',
+                'img/icons/android-chrome-192x192.png',
             ])
         )
     )
