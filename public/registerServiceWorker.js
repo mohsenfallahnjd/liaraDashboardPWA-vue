@@ -37,14 +37,16 @@
 self.addEventListener('install', event => {
     console.log('service worker has been installed')
     event.waitUntil(
-        caches.open('LiaraPWA').then(cache =>
+        caches
+        .open('LiaraPWA')
+        .then(cache =>
             cache.addAll([
                 'favicon.ico',
-                // 'https://liarapwa.liara.run/js/chunk-vendors.js',
-                // 'https://liarapwa.liara.run/manifest.json',
-                // 'https://liarapwa.liara.run/fonts/dana-fanum-bold.0dd44d65.woff2',
-                // 'https://liarapwa.liara.run/fonts/dana-fanum-regular.870a0b65.woff2',
-                // 'https://liarapwa.liara.run/img/icons/android-chrome-192x192.png',
+                'https://liarapwa.liara.run/js/chunk-vendors.js',
+                'https://liarapwa.liara.run/manifest.json',
+                'https://liarapwa.liara.run/fonts/dana-fanum-bold.0dd44d65.woff2',
+                'https://liarapwa.liara.run/fonts/dana-fanum-regular.870a0b65.woff2',
+                'https://liarapwa.liara.run/img/icons/android-chrome-192x192.png',
             ])
         )
     )
