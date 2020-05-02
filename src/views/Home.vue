@@ -14,6 +14,7 @@
                 :key="item.id"
                 :details="item"
                 @deleteErr="pushBanner"
+                @deleteOk="deleteOk"
             />
         </div>
         <b-icon-plus-circle-fill
@@ -96,6 +97,12 @@ export default {
             localStorage.token = ''
             this.$router.push({ name: 'Login' })
         },
+        deleteOk(deleteItem) {
+            this.pushBanner('برنامه با موفقیت حذف شد', '#6DDE17 ')
+            this.projects = this.projects.filter(
+                item => item.project_id != deleteItem
+            )
+        },
         pushBanner(content = 'لطفا مجددا تلاش کنید', color = '#dc3545') {
             this.banner = true
 
@@ -163,6 +170,9 @@ export default {
                     if (response.status === 200) {
                         console.log(`${nameOfPost} Success`)
                         this.pushBanner('برنامه با موفقیت ایجاد شد', '#6DDE17 ')
+                        setTimeout(function() {
+                            location.reload()
+                        }, 5000)
                     } else {
                         this.pushBanner('لطفا مجددا تلاش کنید', '#dc3545')
                         console.log(response)
@@ -240,7 +250,6 @@ $white : #ffffff
         width: 98vw
         display: flex
         align-items: center
-        // justify-content: center
         overflow-x: auto
         overflow-y: hidden
         &::-webkit-scrollbar

@@ -5,8 +5,24 @@
             class="delete-icon"
             scale="1.3"
             variant="danger"
-            @click="deleteProgram"
+            @click="showAlert"
         />
+
+        <b-alert
+            :show="dismissCountDown"
+            fade
+            dismissible
+            variant="danger"
+            @dismiss-count-down="countDownChanged"
+            class="delete-alert"
+        >
+            آیا برای حذف کردن مطمئن هستید؟!
+
+            <b-button @click="deleteProgram" variant="success">
+                بله
+            </b-button>
+        </b-alert>
+
         <b-img class="logo-type" :src="getImgUrl" />
         <h1>
             <b>{{ details.project_id }}</b>
@@ -46,13 +62,22 @@ export default {
     },
     data: () => ({
         currentMode: false,
+        dismissSecs: 25,
+        dismissCountDown: 0,
     }),
     beforeMount() {
         this.currentMode = Boolean(Number(this.details.scale))
     },
     methods: {
+        countDownChanged(dismissCountDown) {
+            this.dismissCountDown = dismissCountDown
+        },
+        showAlert() {
+            this.dismissCountDown = this.dismissSecs
+        },
         deleteProgram() {
             document.getElementById('delete-btn').disabled = true
+            this.dismissCountDown = 0
             axios
                 .delete(
                     `https://api.liara.ir/v1/projects/${this.details.project_id}`,
@@ -68,7 +93,7 @@ export default {
                         console.log(
                             `Delete '${this.details.project_id}' Program Success`
                         )
-                        // this.location.reload()
+                        this.$emit('deleteOk', this.details.project_id)
                     } else {
                         console.log(response)
                         this.errorBanner()
@@ -188,6 +213,14 @@ $green : #6DDE17
         align-self: flex-start
         top: 10px
         margin-right: 10px
+    .delete-alert
+        position: absolute
+        align-self: center
+        top: 10px
+        display: flex
+        justify-content: center
+        flex-direction: column
+        padding-right: 40px
     .logo-type
         width: 150px
     .greenColor

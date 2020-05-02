@@ -7,6 +7,15 @@
 <script>
 export default {
     name: 'App',
+    beforeMount() {
+        //Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker
+                .register('/registerServiceWorker.js')
+                .then(reg => console.log('registered! 👍🏼', reg))
+                .catch(err => console.error('SW registration failed! 😱', err))
+        }
+    },
 }
 </script>
 
