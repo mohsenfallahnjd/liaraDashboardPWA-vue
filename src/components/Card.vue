@@ -1,6 +1,12 @@
 <template>
     <div class="card">
-        <b-icon-trash class="delete-icon" scale="1.3" variant="danger" />
+        <b-icon-trash
+            id="delete-btn"
+            class="delete-icon"
+            scale="1.3"
+            variant="danger"
+            @click="deleteProgram"
+        />
         <b-img class="logo-type" :src="getImgUrl" />
         <h1>
             <b>{{ details.project_id }}</b>
@@ -45,6 +51,54 @@ export default {
         this.currentMode = Boolean(Number(this.details.scale))
     },
     methods: {
+        deleteProgram() {
+            document.getElementById('delete-btn').disabled = true
+            axios
+                .delete(
+                    `https://api.liara.ir/v1/projects/${this.details.project_id}`,
+                    {
+                        headers: {
+                            Authorization:
+                                'Bearer ' + localStorage.token.toString(),
+                        },
+                    }
+                )
+                .then(response => {
+                    if (response.status === 200) {
+                        console.log(
+                            `Delete '${this.details.project_id}' Program Success`
+                        )
+                        // this.location.reload()
+                    } else {
+                        console.log(response)
+                        this.errorBanner()
+                    }
+                    document.getElementById('delete-btn').disabled = false
+                })
+                .catch(e => {
+                    document.getElementById('delete-btn').disabled = false
+                    this.errorBanner()
+                    if (e.response) {
+                        console.log('Error Response')
+                        if (e.response.status === 401) {
+                            console.log('Unauthorized')
+                        } else {
+                            console.log(
+                                e,
+                                `Delete '${this.details.project_id}' Program Fail`
+                            )
+                        }
+                    } else if (e.request) {
+                        console.log('Error Request')
+                        console.log(e.request)
+                    } else {
+                        console.log('Error', e)
+                    }
+                })
+        },
+        errorBanner() {
+            this.$emit('deleteErr')
+        },
         changeMode(checked) {
             document.getElementById('toggle-btn').disabled = true
             this.postAxios(

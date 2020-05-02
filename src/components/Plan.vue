@@ -26,7 +26,7 @@ export default {
     data: () => ({
         plans: [
             {
-                id: 'nano',
+                id: 'small',
                 RAM: '512 MB',
                 cpu: '0.25 Core',
                 memory: '2 گیگ',
@@ -34,7 +34,7 @@ export default {
                 CPH: '37.5 تومان',
             },
             {
-                id: 'micro',
+                id: 'medium',
                 RAM: '1 GB',
                 cpu: '0.5 Core',
                 memory: '5 گیگ',
@@ -42,7 +42,7 @@ export default {
                 CPH: '75 تومان',
             },
             {
-                id: 'standard-1x',
+                id: 'standard',
                 RAM: '2 GB',
                 cpu: '1 Core',
                 memory: '10 گیگ',
@@ -58,7 +58,7 @@ export default {
                 CPH: '300 تومان',
             },
             {
-                id: 'performance-1x',
+                id: 'large',
                 RAM: '6 GB',
                 cpu: '3 Core',
                 memory: '40 گیگ',
@@ -66,7 +66,7 @@ export default {
                 CPH: '450 تومان',
             },
             {
-                id: 'performance-2x',
+                id: 'large-2x',
                 RAM: '8 GB',
                 cpu: '4 Core',
                 memory: '60 گیگ',
@@ -77,11 +77,11 @@ export default {
     }),
     computed: {
         plan() {
-            return this.plans.filter(plan => plan.id == this.smallConvertNano)
+            return this.plans.filter(plan => plan.id == this.planID)
         },
-        smallConvertNano() {
-            return this.planID == 'small' ? 'nano' : this.planID
-        },
+        // smallConvertNano() {
+        //     return this.planID == 'small' ? 'nano' : this.planID
+        // },
     },
 }
 </script>

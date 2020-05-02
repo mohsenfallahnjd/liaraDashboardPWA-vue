@@ -8,19 +8,30 @@
             <h5 :class="requireValue ? 'empty-input' : ''">
                 API key خودتو وارد کن
             </h5>
+
             <b-form-input
+                id="input-api"
                 class="login-box--input"
                 v-model="apiKey"
                 :state="requireValue ? false : null"
             />
-            <b-button
-                id="login-box--btn"
-                class="login-box--btn"
-                variant="success"
-                @click="login"
+
+            <b-input-group
+                class="d-flex justify-content-center align-items-center"
             >
-                ورود
-            </b-button>
+                <b-button @click="paste" variant="outline-secondary ml-3">
+                    <b-icon-clipboard aria-hidden="true" class="mb-1" />
+                    چسباندن
+                </b-button>
+                <b-button
+                    id="login-box--btn"
+                    class="login-box--btn"
+                    variant="success"
+                    @click="login"
+                >
+                    ورود
+                </b-button>
+            </b-input-group>
         </div>
         <div class="liara-details">
             <p class="liara-details__site">
@@ -117,6 +128,11 @@ export default {
                 document.getElementById('unauthorized').style.top = '-56px'
                 document.getElementById('login-box--btn').disabled = false
             }, 5000)
+        },
+        paste() {
+            navigator.clipboard
+                .readText()
+                .then(clipText => (this.apiKey = clipText))
         },
     },
 }

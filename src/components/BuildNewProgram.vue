@@ -49,12 +49,12 @@ export default {
             requireValue: false,
             plan: '',
             plans: [
-                'nano',
-                'micro',
-                'standard-1x',
+                'small',
+                'medium',
+                'standard',
                 'standard-2x',
-                'performance-1x',
-                'performance-2x',
+                'large',
+                'large-2x',
             ],
             platform: '',
             platforms: ['vue', 'react', 'angular', 'nodejs', 'laravel'],
@@ -62,7 +62,7 @@ export default {
     },
     watch: {
         name() {
-            this.$emit('name', this.name)
+            this.$emit('name', this.name.toLowerCase())
         },
         plan() {
             this.$emit('plan', this.plan)
